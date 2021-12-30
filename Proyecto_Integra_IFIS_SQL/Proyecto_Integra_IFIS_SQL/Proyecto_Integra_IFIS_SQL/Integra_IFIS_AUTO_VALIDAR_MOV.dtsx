@@ -1,0 +1,131 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/26/2015 3:48:27 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="WIN-SERVAPP-01"
+  DTS:CreatorName="DGAC\aldo"
+  DTS:DTSID="{4DC66419-D8B1-466B-9F0A-F2BC70656FA5}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.2344.23"
+  DTS:LocaleID="3082"
+  DTS:ObjectName="Integra_IFIS_SQL"
+  DTS:PackageType="5"
+  DTS:VersionBuild="382"
+  DTS:VersionGUID="{0F985592-ED63-4592-896A-D289950BB28D}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[WIN-SQLSERV-01.adminsql]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{EB4D0D51-B745-409D-B8C4-BC1CD0059E8F}"
+      DTS:ObjectName="WIN-SQLSERV-01.adminsql">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=WIN-SQLSERV-01;User ID=adminsql;Initial Catalog=iFIS;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;Workstation ID=WIN-SERVAPP-0111;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAQPqIDT7bj0eYqEVTVKELHgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADHFvtevIS4olaedPUX6xPRAAAAAASAAACgAAAAEAAAAKf06JFPcA6KXlh6I4/7mhoYAAAAAaS/1m2+Cy5AxLVCX6yJdcl8izctogSrFAAAAJD/1LVoHLyeH9UKUw6lXjWaqsuG</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F5A73799-25D2-49AF-A772-F2A5B2BC9409}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="DATEADD( &quot;day&quot;, -4,  @[System::StartTime])"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="f1">
+      <DTS:VariableValue
+        DTS:DataType="7">6/26/2017 11:20:11 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7A7D8836-16A1-403E-BD64-85240777A760}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="DATEADD( &quot;day&quot;, 4,  @[System::StartTime])"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="f2">
+      <DTS:VariableValue
+        DTS:DataType="7">7/4/2017 11:20:11 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5FCA35B2-37E7-4CB9-9599-56B8DABF30DA}"
+      DTS:EvaluateAsExpression="True"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="registros">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Auto validar movimientos sin DTAE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E6AA0734-C06B-47FC-B2EE-251D094CCA33}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Auto validar movimientos sin DTAE"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{EB4D0D51-B745-409D-B8C4-BC1CD0059E8F}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="UPDATE DBO.OPERATION &#xA; SET APROBADO  = 1&#xA; WHERE id IN (&#xA;SELECT ID&#xA;  FROM [iFIS].[dbo].[vista_cabecera_dta]&#xA;  where state_descrip = 'Verificado' and usuario_modifica is null and Dtae_requerido = 0&#xA;  and date  BETWEEN ? AND ?&#xA;&#xA;  )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::f1"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::f2"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="244,42"
+          Id="Package\Auto validar movimientos sin DTAE"
+          TopLeft="22,19" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

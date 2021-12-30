@@ -1,0 +1,89 @@
+﻿<DeploymentSnapshot xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0">
+  <Target>
+    <Database>BI_FINANCIERO_GASTOS</Database>
+    <Server>WIN-SQLSERV-01</Server>
+    <ConnectionString>DataSource=WIN-SQLSERV-01;Timeout=0</ConnectionString>
+  </Target>
+  <Options>
+    <TransactionalDeployment>false</TransactionalDeployment>
+    <PartitionDeployment>DeployPartitions</PartitionDeployment>
+    <RoleDeployment>DeployRolesRetainMembers</RoleDeployment>
+    <ProcessingOption>Default</ProcessingOption>
+    <OutputScript></OutputScript>
+    <ImpactAnalysisFile></ImpactAnalysisFile>
+    <ConfigurationSettingsDeployment>Deploy</ConfigurationSettingsDeployment>
+    <OptimizationSettingsDeployment>Deploy</OptimizationSettingsDeployment>
+    <WriteBackTableCreation>UseExisting</WriteBackTableCreation>
+  </Options>
+  <Snapshot>
+    <ObjectSnapshots>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.RelationalDataSource</Type>
+        <TimeStamp>3DZuNAKAC1GwAD3dGYcMR2xVcCY=11/08/2021 9:09:3505/08/2021 16:08:38</TimeStamp>
+        <ID>
+          <String>WIN-SQLSERV-01</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.RelationalDataSource</Type>
+        <TimeStamp>uox8PZoJtEpvZXTnGlpz0cY4H+4=11/08/2021 9:10:0005/08/2021 16:09:57</TimeStamp>
+        <ID>
+          <String>WIN-SQLSERV-01 1</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.DataSourceView</Type>
+        <TimeStamp>C9ibbnr2ckasYiIxK0IRe+9A5nE=05/08/2021 16:17:5205/08/2021 16:09:39</TimeStamp>
+        <ID>
+          <String>Bi Financiero</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.DataSourceView</Type>
+        <TimeStamp>kuJ7Xa7tm9k5UHKKrZI7Ss/nlys=05/08/2021 16:12:2505/08/2021 16:10:41</TimeStamp>
+        <ID>
+          <String>i FIS</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>ws6M9F8EgROIAy6SNGw7lRygC24=11/08/2021 9:11:1105/08/2021 16:12:20</TimeStamp>
+        <ID>
+          <String>DIMTIME</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>H6djY+HtZdgBoPA9fnBsdVUUDHc=25/08/2021 12:16:2205/08/2021 16:19:03</TimeStamp>
+        <ID>
+          <String>GASTOS</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Cube</Type>
+        <TimeStamp>3b6HgE88wwuNGBfe1jtqzhLFdvY=25/08/2021 12:16:2205/08/2021 16:12:206f2+2vod/+mnYj6pzCmfQbZm2As=05/08/2021 16:12:2105/08/2021 16:12:20</TimeStamp>
+        <ID>
+          <String>Bi Financiero</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Role</Type>
+        <TimeStamp>qoUZdju3j12Y7Y46rQPcJfJY0y4=11/08/2021 9:05:2911/08/2021 8:40:29</TimeStamp>
+        <ID>
+          <String>Role</String>
+        </ID>
+      </ObjectSnapshot>
+    </ObjectSnapshots>
+    <DatabaseSnapshot>
+      <Type>Microsoft.AnalysisServices.Database</Type>
+      <TimeStamp>x0Xjy5gHdm1MrqwcH3OIw1doGP4=11/08/2021 8:51:2505/08/2021 16:08:10</TimeStamp>
+      <ID>
+        <String>BI_FINANCIERO_GASTOS</String>
+      </ID>
+    </DatabaseSnapshot>
+    <Granularity>Coarse</Granularity>
+  </Snapshot>
+  <AssemblyLocations />
+  <ProcessingComplete>true</ProcessingComplete>
+  <LastDeployed>2021-08-25T17:19:28.743333Z</LastDeployed>
+</DeploymentSnapshot>

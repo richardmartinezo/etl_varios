@@ -1,0 +1,2877 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/3/2021 9:40:37 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="WIN-SERVAPP-01"
+  DTS:CreatorName="DGAC\aldo.basantes"
+  DTS:DTSID="{03DDC388-A1B9-453E-899D-D9B1F115DE1B}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.2344.23"
+  DTS:LocaleID="3082"
+  DTS:ObjectName="marca_inactivos"
+  DTS:PackageType="5"
+  DTS:VersionBuild="37"
+  DTS:VersionGUID="{B9F2797F-BA2A-447C-9FC9-F4A3D5E1FC97}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[win-sqlserv-01.Roles_dgac]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9E4EAFCC-DDBB-40B1-B0FA-064227749F45}"
+      DTS:ObjectName="win-sqlserv-01.Roles_dgac">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=win-sqlserv-01;Initial Catalog=Roles_dgac;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F531626E-7824-4883-A937-8425C2BFCBCC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9E4EAFCC-DDBB-40B1-B0FA-064227749F45}"
+          SQLTask:SqlStatementSource="UPDATE       funcionarios&#xA;SET                VISUALIZAR = 0" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Marca inactivos"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Tarea Flujo de datos"
+      DTS:DTSID="{F3EE1B0B-742C-463A-9463-1270CC02B504}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Marca inactivos"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Marca inactivos\Comando de OLE DB"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="Comando de OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;2"
+              description="Ejecuta una instrucción SQL para cada fila de un flujo de datos. Por ejemplo, se usa para llamar al procedimiento almacenado de configuración de nuevo empleado para cada fila de la tabla de nuevos empleados. Nota: la ejecución de una instrucción SQL para cada fila de un flujo de datos de gran tamaño puede tardar mucho tiempo."
+              name="Comando de OLE DB"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Comando SQL para ejecutar."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">UPDATE funcionarios  SET visualizar  = 1 where cedula = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Marca inactivos\Comando de OLE DB.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[win-sqlserv-01.Roles_dgac]"
+                  connectionManagerRefId="Package.ConnectionManagers[win-sqlserv-01.Roles_dgac]"
+                  description="La conexión de tiempo de ejecución OLE DB usada para obtener acceso a la base de datos."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Marca inactivos\Comando de OLE DB.Inputs[Entrada de comando de OLE DB]"
+                  errorOrTruncationOperation="Ejecución de comando"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Entrada de comando de OLE DB">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Comando de OLE DB.Inputs[Entrada de comando de OLE DB].Columns[CEDULA]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="CEDULA"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Marca inactivos\Comando de OLE DB.Inputs[Entrada de comando de OLE DB].ExternalColumns[Param_0]"
+                      lineageId="Package\Marca inactivos\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[CEDULA]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Comando de OLE DB.Inputs[Entrada de comando de OLE DB].ExternalColumns[Param_0]"
+                      dataType="wstr"
+                      length="255"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Información de parámetros. Coincide con los valores de DBPARAMFLAGSENUM de OLE DB."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Marca inactivos\Comando de OLE DB.Outputs[Salida de comando de OLE DB]"
+                  exclusionGroup="1"
+                  name="Salida de comando de OLE DB"
+                  synchronousInputId="Package\Marca inactivos\Comando de OLE DB.Inputs[Entrada de comando de OLE DB]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Marca inactivos\Comando de OLE DB.Outputs[Salida de error de comando de OLE DB]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de comando de OLE DB"
+                  synchronousInputId="Package\Marca inactivos\Comando de OLE DB.Inputs[Entrada de comando de OLE DB]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Comando de OLE DB.Outputs[Salida de error de comando de OLE DB].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Marca inactivos\Comando de OLE DB.Outputs[Salida de error de comando de OLE DB].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Comando de OLE DB.Outputs[Salida de error de comando de OLE DB].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Marca inactivos\Comando de OLE DB.Outputs[Salida de error de comando de OLE DB].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Marca inactivos\Combinación de mezcla"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Combinación de mezcla;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;1"
+              description="Combina dos flujos de datos ordenados en uno solo mediante la combinación FULL, LEFT o INNER. Se recomienda esta transformación cuando se pueden ordenar los flujos de datos en sus orígenes."
+              name="Combinación de mezcla"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el tipo de combinación que se debe realizar."
+                  name="JoinType"
+                  typeConverter="JoinType">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el número de columnas de la clave de ordenación."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si los valores NULL se tratan como valores iguales."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indica la cantidad máxima solicitada de búferes por entrada antes del bloqueo."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Marca inactivos\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla]"
+                  hasSideEffects="true"
+                  name="Entrada izquierda de combinación de mezcla">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[CEDULA]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="CEDULA"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[CEDULA]" />
+                    <inputColumn
+                      refId="Package\Marca inactivos\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[VISUALIZAR]"
+                      cachedDataType="bool"
+                      cachedName="VISUALIZAR"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[VISUALIZAR]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Marca inactivos\Combinación de mezcla.Inputs[Entrada derecha de combinación de mezcla]"
+                  hasSideEffects="true"
+                  name="Entrada derecha de combinación de mezcla">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Combinación de mezcla.Inputs[Entrada derecha de combinación de mezcla].Columns[NUMERO_DOCUMENTO]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="NUMERO_DOCUMENTO"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[NUMERO_DOCUMENTO]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Marca inactivos\Combinación de mezcla.Outputs[Salida de combinación de mezcla]"
+                  isSorted="true"
+                  name="Salida de combinación de mezcla">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[CEDULA]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[CEDULA]"
+                      name="CEDULA"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\Marca inactivos\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[CEDULA]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[VISUALIZAR]"
+                      dataType="bool"
+                      lineageId="Package\Marca inactivos\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[VISUALIZAR]"
+                      name="VISUALIZAR">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\Marca inactivos\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[VISUALIZAR]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[NUMERO_DOCUMENTO]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Marca inactivos\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[NUMERO_DOCUMENTO]"
+                      name="NUMERO_DOCUMENTO">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\Marca inactivos\Combinación de mezcla.Inputs[Entrada derecha de combinación de mezcla].Columns[NUMERO_DOCUMENTO]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Marca inactivos\División condicional"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="División condicional;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;0"
+              description="Enruta filas de datos a diferentes salidas según el contenido de los datos. Se usan condiciones (expresiones de SSIS) para especificar las filas que se van a enrutar. Por ejemplo, se usa para separar los registros que deben limpiarse de los registros listos para ser cargados o para enrutar solamente un subconjunto de registros."
+              name="División condicional"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Marca inactivos\División condicional.Inputs[Entrada de división condicional]"
+                  description="Entrada en la transformación División condicional"
+                  name="Entrada de división condicional">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Marca inactivos\División condicional.Inputs[Entrada de división condicional].Columns[MES]"
+                      cachedDataType="i8"
+                      cachedName="MES"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MES]" />
+                    <inputColumn
+                      refId="Package\Marca inactivos\División condicional.Inputs[Entrada de división condicional].Columns[EJERCICIO]"
+                      cachedDataType="i8"
+                      cachedName="EJERCICIO"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[EJERCICIO]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Marca inactivos\División condicional.Outputs[Datos_del_mes_actual]"
+                  description="Salida 1 de la transformación División condicional"
+                  errorOrTruncationOperation="Cálculo"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Datos_del_mes_actual"
+                  synchronousInputId="Package\Marca inactivos\División condicional.Inputs[Entrada de división condicional]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Especifica la expresión. Esta versión de expresión usa identificadores de linaje en lugar de nombres de columna."
+                      name="Expression">[MONTH]([GETDATE]()) - 1 == (#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MES]}) &amp;&amp; [YEAR]([GETDATE]()) == #{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[EJERCICIO]}</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Especifica la versión descriptiva de la expresión. Esta versión de expresión usa nombres de columna."
+                      expressionType="Notify"
+                      name="FriendlyExpression">MONTH(GETDATE()) - 1 == (MES) &amp;&amp; YEAR(GETDATE()) == EJERCICIO</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica la posición de la condición en la lista de condiciones que evalúa la transformación. El orden de evaluación es del menor al mayor valor."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Marca inactivos\División condicional.Outputs[Salida predeterminada de división condicional]"
+                  description="Salida predeterminada de la transformación División condicional"
+                  exclusionGroup="1"
+                  name="Salida predeterminada de división condicional"
+                  synchronousInputId="Package\Marca inactivos\División condicional.Inputs[Entrada de división condicional]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Marca inactivos\División condicional.Outputs[Salida de error de división condicional]"
+                  description="Salida de error de la transformación División condicional"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de división condicional"
+                  synchronousInputId="Package\Marca inactivos\División condicional.Inputs[Entrada de división condicional]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Marca inactivos\División condicional.Outputs[Salida de error de división condicional].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Marca inactivos\División condicional.Outputs[Salida de error de división condicional].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\División condicional.Outputs[Salida de error de división condicional].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Marca inactivos\División condicional.Outputs[Salida de error de división condicional].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Marca inactivos\Funcionarios"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="Origen de OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;7"
+              description="Origen de OLE DB"
+              name="Funcionarios"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowset">[dbo].[funcionarios]</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica la variable que contiene el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="Comando SQL para ejecutar."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="Variable que contiene el comando SQL para ejecutar."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Fuerza el uso del valor de la propiedad DefaultCodePage al describir datos de caracteres."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el modo utilizado para obtener acceso a la base de datos."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="Asignaciones entre los parámetros del comando SQL y las variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Marca inactivos\Funcionarios.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[win-sqlserv-01.Roles_dgac]"
+                  connectionManagerRefId="Package.ConnectionManagers[win-sqlserv-01.Roles_dgac]"
+                  description="La conexión de tiempo de ejecución OLE DB usada para obtener acceso a la base de datos."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB]"
+                  name="Salida de origen de OLE DB">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[CEDULA]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[CEDULA]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[CEDULA]"
+                      name="CEDULA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[APELLIDOS_NOMBRES]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[APELLIDOS_NOMBRES]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[APELLIDOS_NOMBRES]"
+                      name="APELLIDOS_NOMBRES"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[NOMBRES_APELLIDOS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[NOMBRES_APELLIDOS]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[NOMBRES_APELLIDOS]"
+                      name="NOMBRES_APELLIDOS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[APELLIDOS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[APELLIDOS]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[APELLIDOS]"
+                      name="APELLIDOS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[NOMBRES]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[NOMBRES]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[NOMBRES]"
+                      name="NOMBRES"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[ALIAS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[ALIAS]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[ALIAS]"
+                      name="ALIAS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[CORREOS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[CORREOS]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[CORREOS]"
+                      name="CORREOS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[PASSWORD]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[PASSWORD]"
+                      length="100"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[PASSWORD]"
+                      name="PASSWORD"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[REGISTRADO]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[REGISTRADO]"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[REGISTRADO]"
+                      name="REGISTRADO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[FECHA_NACIMIENTO]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[FECHA_NACIMIENTO]"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[FECHA_NACIMIENTO]"
+                      name="FECHA_NACIMIENTO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[ADMINISTRADOR]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[ADMINISTRADOR]"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[ADMINISTRADOR]"
+                      name="ADMINISTRADOR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[EXT_TELEFONO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[EXT_TELEFONO]"
+                      length="10"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[EXT_TELEFONO]"
+                      name="EXT_TELEFONO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[ID_CIUDADES]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[ID_CIUDADES]"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[ID_CIUDADES]"
+                      name="ID_CIUDADES"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[PISO]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[PISO]"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[PISO]"
+                      name="PISO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[N_CELULAR]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[N_CELULAR]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[N_CELULAR]"
+                      name="N_CELULAR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[N_CONVENCIONAL]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[N_CONVENCIONAL]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[N_CONVENCIONAL]"
+                      name="N_CONVENCIONAL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[DIR_DOMICILIO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[DIR_DOMICILIO]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[DIR_DOMICILIO]"
+                      name="DIR_DOMICILIO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[E_MAILPERSONAL]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[E_MAILPERSONAL]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[E_MAILPERSONAL]"
+                      name="E_MAILPERSONAL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[N_VACUNAS]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[N_VACUNAS]"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[N_VACUNAS]"
+                      name="N_VACUNAS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[VISUALIZAR]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[VISUALIZAR]"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[VISUALIZAR]"
+                      name="VISUALIZAR"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[CEDULA]"
+                      dataType="wstr"
+                      length="255"
+                      name="CEDULA" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[APELLIDOS_NOMBRES]"
+                      dataType="wstr"
+                      length="255"
+                      name="APELLIDOS_NOMBRES" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[NOMBRES_APELLIDOS]"
+                      dataType="wstr"
+                      length="255"
+                      name="NOMBRES_APELLIDOS" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[APELLIDOS]"
+                      dataType="wstr"
+                      length="255"
+                      name="APELLIDOS" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[NOMBRES]"
+                      dataType="wstr"
+                      length="255"
+                      name="NOMBRES" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[ALIAS]"
+                      dataType="wstr"
+                      length="255"
+                      name="ALIAS" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[CORREOS]"
+                      dataType="wstr"
+                      length="255"
+                      name="CORREOS" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[PASSWORD]"
+                      dataType="wstr"
+                      length="100"
+                      name="PASSWORD" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[REGISTRADO]"
+                      dataType="bool"
+                      name="REGISTRADO" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[FECHA_NACIMIENTO]"
+                      dataType="dbDate"
+                      name="FECHA_NACIMIENTO" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[ADMINISTRADOR]"
+                      dataType="bool"
+                      name="ADMINISTRADOR" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[EXT_TELEFONO]"
+                      dataType="wstr"
+                      length="10"
+                      name="EXT_TELEFONO" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[ID_CIUDADES]"
+                      dataType="r8"
+                      name="ID_CIUDADES" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[PISO]"
+                      dataType="i4"
+                      name="PISO" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[N_CELULAR]"
+                      dataType="wstr"
+                      length="255"
+                      name="N_CELULAR" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[N_CONVENCIONAL]"
+                      dataType="wstr"
+                      length="255"
+                      name="N_CONVENCIONAL" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[DIR_DOMICILIO]"
+                      dataType="wstr"
+                      length="255"
+                      name="DIR_DOMICILIO" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[E_MAILPERSONAL]"
+                      dataType="wstr"
+                      length="255"
+                      name="E_MAILPERSONAL" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[N_VACUNAS]"
+                      dataType="i4"
+                      name="N_VACUNAS" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].ExternalColumns[VISUALIZAR]"
+                      dataType="bool"
+                      name="VISUALIZAR" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB]"
+                  isErrorOut="true"
+                  name="Salida de error de origen de OLE DB">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[CEDULA]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[CEDULA]"
+                      name="CEDULA" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[APELLIDOS_NOMBRES]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[APELLIDOS_NOMBRES]"
+                      name="APELLIDOS_NOMBRES" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[NOMBRES_APELLIDOS]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[NOMBRES_APELLIDOS]"
+                      name="NOMBRES_APELLIDOS" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[APELLIDOS]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[APELLIDOS]"
+                      name="APELLIDOS" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[NOMBRES]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[NOMBRES]"
+                      name="NOMBRES" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[ALIAS]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[ALIAS]"
+                      name="ALIAS" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[CORREOS]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[CORREOS]"
+                      name="CORREOS" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[PASSWORD]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[PASSWORD]"
+                      name="PASSWORD" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[REGISTRADO]"
+                      dataType="bool"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[REGISTRADO]"
+                      name="REGISTRADO" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[FECHA_NACIMIENTO]"
+                      dataType="dbDate"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[FECHA_NACIMIENTO]"
+                      name="FECHA_NACIMIENTO" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[ADMINISTRADOR]"
+                      dataType="bool"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[ADMINISTRADOR]"
+                      name="ADMINISTRADOR" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[EXT_TELEFONO]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[EXT_TELEFONO]"
+                      name="EXT_TELEFONO" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[ID_CIUDADES]"
+                      dataType="r8"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[ID_CIUDADES]"
+                      name="ID_CIUDADES" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[PISO]"
+                      dataType="i4"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[PISO]"
+                      name="PISO" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[N_CELULAR]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[N_CELULAR]"
+                      name="N_CELULAR" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[N_CONVENCIONAL]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[N_CONVENCIONAL]"
+                      name="N_CONVENCIONAL" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[DIR_DOMICILIO]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[DIR_DOMICILIO]"
+                      name="DIR_DOMICILIO" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[E_MAILPERSONAL]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[E_MAILPERSONAL]"
+                      name="E_MAILPERSONAL" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[N_VACUNAS]"
+                      dataType="i4"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[N_VACUNAS]"
+                      name="N_VACUNAS" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[VISUALIZAR]"
+                      dataType="bool"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[VISUALIZAR]"
+                      name="VISUALIZAR" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Marca inactivos\Multidifusión"
+              componentClassID="Microsoft.Multicast"
+              contactInfo="Multidifusión;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;0"
+              description="Distribuye cada fila de entrada a cada una de las filas de una o varias salidas. Por ejemplo, se crea una bifurcación de un flujo de datos para realizar una copia de los datos de modo que se puedan enmascarar algunos valores antes de compartirlos con los asociados externos."
+              name="Multidifusión">
+              <inputs>
+                <input
+                  refId="Package\Marca inactivos\Multidifusión.Inputs[Entrada de Multidifusión 1]"
+                  name="Entrada de Multidifusión 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Marca inactivos\Multidifusión.Outputs[Salida de multidifusión 1]"
+                  deleteOutputOnPathDetached="true"
+                  name="Salida de multidifusión 1"
+                  synchronousInputId="Package\Marca inactivos\Multidifusión.Inputs[Entrada de Multidifusión 1]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Marca inactivos\Multidifusión.Outputs[Salida de multidifusión 2]"
+                  dangling="true"
+                  deleteOutputOnPathDetached="true"
+                  name="Salida de multidifusión 2"
+                  synchronousInputId="Package\Marca inactivos\Multidifusión.Inputs[Entrada de Multidifusión 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Marca inactivos\Ordenar"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Ordenar;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;1"
+              description="Ordena los datos de entrada de manera ascendente o descendente cuando no es posible ordenarlos en su origen. Por ejemplo, se ordenan los datos de ventas por 'id. de cliente' antes de que se escriban en un archivo plano y se entreguen a otro departamento. Nota: no se recomienda realizar esta transformación para grandes flujos de datos."
+              name="Ordenar"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si la transformación Ordenar quita filas con valores de ordenación duplicados."
+                  name="EliminateDuplicates">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el número máximo de subprocesos que se deben usar para la ordenación."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación]"
+                  name="Entrada de ordenación">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[APELLIDOS_NOMBRES]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="APELLIDOS_NOMBRES"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[APELLIDOS_NOMBRES]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[EJERCICIO]"
+                      cachedDataType="i8"
+                      cachedName="EJERCICIO"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[EJERCICIO]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[MES]"
+                      cachedDataType="i8"
+                      cachedName="MES"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MES]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[TIPO_NOMINA]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="TIPO_NOMINA"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[TIPO_NOMINA]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[DESCRIPCION]"
+                      cachedDataType="nText"
+                      cachedName="DESCRIPCION"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[DESCRIPCION]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[NO_CUR]"
+                      cachedDataType="r8"
+                      cachedName="NO_CUR"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[NO_CUR]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[FECHA_CUR]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="FECHA_CUR"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[FECHA_CUR]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[ID_NOMINA]"
+                      cachedDataType="r8"
+                      cachedName="ID_NOMINA"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[ID_NOMINA]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[NUMERO_DOCUMENTO]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="NUMERO_DOCUMENTO"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[NUMERO_DOCUMENTO]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[CODIGO_DEDUCCION]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="CODIGO_DEDUCCION"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[CODIGO_DEDUCCION]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[TIPO_RUBRO]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="TIPO_RUBRO"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[TIPO_RUBRO]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[CODIGO_RUBRO]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="CODIGO_RUBRO"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[CODIGO_RUBRO]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[NOMBRE_RUBRO]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="NOMBRE_RUBRO"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[NOMBRE_RUBRO]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[MONTO_CALCULADO]"
+                      cachedDataType="r8"
+                      cachedName="MONTO_CALCULADO"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MONTO_CALCULADO]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[MONTO_DESCONTADO]"
+                      cachedDataType="r8"
+                      cachedName="MONTO_DESCONTADO"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MONTO_DESCONTADO]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[MONTO_PENDIENTE]"
+                      cachedDataType="r8"
+                      cachedName="MONTO_PENDIENTE"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MONTO_PENDIENTE]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación].Columns[id]"
+                      cachedDataType="i8"
+                      cachedName="id"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[id]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación]"
+                  isSorted="true"
+                  name="Salida de ordenación">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[APELLIDOS_NOMBRES]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[APELLIDOS_NOMBRES]"
+                      name="APELLIDOS_NOMBRES">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[APELLIDOS_NOMBRES]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[EJERCICIO]"
+                      dataType="i8"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[EJERCICIO]"
+                      name="EJERCICIO">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[EJERCICIO]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[MES]"
+                      dataType="i8"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[MES]"
+                      name="MES">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MES]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[TIPO_NOMINA]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[TIPO_NOMINA]"
+                      name="TIPO_NOMINA">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[TIPO_NOMINA]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[DESCRIPCION]"
+                      dataType="nText"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[DESCRIPCION]"
+                      name="DESCRIPCION">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[DESCRIPCION]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[NO_CUR]"
+                      dataType="r8"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[NO_CUR]"
+                      name="NO_CUR">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[NO_CUR]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[FECHA_CUR]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[FECHA_CUR]"
+                      name="FECHA_CUR">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[FECHA_CUR]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[ID_NOMINA]"
+                      dataType="r8"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[ID_NOMINA]"
+                      name="ID_NOMINA">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[ID_NOMINA]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[NUMERO_DOCUMENTO]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[NUMERO_DOCUMENTO]"
+                      name="NUMERO_DOCUMENTO"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[NUMERO_DOCUMENTO]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[CODIGO_DEDUCCION]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[CODIGO_DEDUCCION]"
+                      name="CODIGO_DEDUCCION">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[CODIGO_DEDUCCION]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[TIPO_RUBRO]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[TIPO_RUBRO]"
+                      name="TIPO_RUBRO">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[TIPO_RUBRO]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[CODIGO_RUBRO]"
+                      dataType="wstr"
+                      length="80"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[CODIGO_RUBRO]"
+                      name="CODIGO_RUBRO">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[CODIGO_RUBRO]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[NOMBRE_RUBRO]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[NOMBRE_RUBRO]"
+                      name="NOMBRE_RUBRO">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[NOMBRE_RUBRO]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[MONTO_CALCULADO]"
+                      dataType="r8"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[MONTO_CALCULADO]"
+                      name="MONTO_CALCULADO">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MONTO_CALCULADO]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[MONTO_DESCONTADO]"
+                      dataType="r8"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[MONTO_DESCONTADO]"
+                      name="MONTO_DESCONTADO">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MONTO_DESCONTADO]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[MONTO_PENDIENTE]"
+                      dataType="r8"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[MONTO_PENDIENTE]"
+                      name="MONTO_PENDIENTE">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MONTO_PENDIENTE]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[id]"
+                      dataType="i8"
+                      lineageId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación].Columns[id]"
+                      name="id">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[id]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Marca inactivos\Ordenar 1"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Ordenar;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;1"
+              description="Ordena los datos de entrada de manera ascendente o descendente cuando no es posible ordenarlos en su origen. Por ejemplo, se ordenan los datos de ventas por 'id. de cliente' antes de que se escriban en un archivo plano y se entreguen a otro departamento. Nota: no se recomienda realizar esta transformación para grandes flujos de datos."
+              name="Ordenar 1"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si la transformación Ordenar quita filas con valores de ordenación duplicados."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el número máximo de subprocesos que se deben usar para la ordenación."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación]"
+                  name="Entrada de ordenación">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[CEDULA]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="CEDULA"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[CEDULA]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[APELLIDOS_NOMBRES]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="APELLIDOS_NOMBRES"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[APELLIDOS_NOMBRES]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[NOMBRES_APELLIDOS]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="NOMBRES_APELLIDOS"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[NOMBRES_APELLIDOS]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[APELLIDOS]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="APELLIDOS"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[APELLIDOS]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[NOMBRES]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="NOMBRES"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[NOMBRES]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[ALIAS]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="ALIAS"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[ALIAS]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[CORREOS]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="CORREOS"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[CORREOS]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[PASSWORD]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="PASSWORD"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[PASSWORD]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[REGISTRADO]"
+                      cachedDataType="bool"
+                      cachedName="REGISTRADO"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[REGISTRADO]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[FECHA_NACIMIENTO]"
+                      cachedDataType="dbDate"
+                      cachedName="FECHA_NACIMIENTO"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[FECHA_NACIMIENTO]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[ADMINISTRADOR]"
+                      cachedDataType="bool"
+                      cachedName="ADMINISTRADOR"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[ADMINISTRADOR]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[EXT_TELEFONO]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="EXT_TELEFONO"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[EXT_TELEFONO]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[ID_CIUDADES]"
+                      cachedDataType="r8"
+                      cachedName="ID_CIUDADES"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[ID_CIUDADES]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[PISO]"
+                      cachedDataType="i4"
+                      cachedName="PISO"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[PISO]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[N_CELULAR]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="N_CELULAR"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[N_CELULAR]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[N_CONVENCIONAL]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="N_CONVENCIONAL"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[N_CONVENCIONAL]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[DIR_DOMICILIO]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DIR_DOMICILIO"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[DIR_DOMICILIO]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[E_MAILPERSONAL]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="E_MAILPERSONAL"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[E_MAILPERSONAL]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[N_VACUNAS]"
+                      cachedDataType="i4"
+                      cachedName="N_VACUNAS"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[N_VACUNAS]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación].Columns[VISUALIZAR]"
+                      cachedDataType="bool"
+                      cachedName="VISUALIZAR"
+                      lineageId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[VISUALIZAR]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica las opciones de comparación para datos de caracteres."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Especifica el criterio de ordenación de la columna."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación]"
+                  isSorted="true"
+                  name="Salida de ordenación">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[CEDULA]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[CEDULA]"
+                      name="CEDULA"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[CEDULA]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[APELLIDOS_NOMBRES]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[APELLIDOS_NOMBRES]"
+                      name="APELLIDOS_NOMBRES">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[APELLIDOS_NOMBRES]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[NOMBRES_APELLIDOS]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[NOMBRES_APELLIDOS]"
+                      name="NOMBRES_APELLIDOS">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[NOMBRES_APELLIDOS]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[APELLIDOS]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[APELLIDOS]"
+                      name="APELLIDOS">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[APELLIDOS]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[NOMBRES]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[NOMBRES]"
+                      name="NOMBRES">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[NOMBRES]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[ALIAS]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[ALIAS]"
+                      name="ALIAS">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[ALIAS]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[CORREOS]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[CORREOS]"
+                      name="CORREOS">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[CORREOS]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[PASSWORD]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[PASSWORD]"
+                      name="PASSWORD">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[PASSWORD]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[REGISTRADO]"
+                      dataType="bool"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[REGISTRADO]"
+                      name="REGISTRADO">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[REGISTRADO]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[FECHA_NACIMIENTO]"
+                      dataType="dbDate"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[FECHA_NACIMIENTO]"
+                      name="FECHA_NACIMIENTO">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[FECHA_NACIMIENTO]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[ADMINISTRADOR]"
+                      dataType="bool"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[ADMINISTRADOR]"
+                      name="ADMINISTRADOR">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[ADMINISTRADOR]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[EXT_TELEFONO]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[EXT_TELEFONO]"
+                      name="EXT_TELEFONO">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[EXT_TELEFONO]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[ID_CIUDADES]"
+                      dataType="r8"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[ID_CIUDADES]"
+                      name="ID_CIUDADES">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[ID_CIUDADES]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[PISO]"
+                      dataType="i4"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[PISO]"
+                      name="PISO">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[PISO]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[N_CELULAR]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[N_CELULAR]"
+                      name="N_CELULAR">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[N_CELULAR]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[N_CONVENCIONAL]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[N_CONVENCIONAL]"
+                      name="N_CONVENCIONAL">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[N_CONVENCIONAL]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[DIR_DOMICILIO]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[DIR_DOMICILIO]"
+                      name="DIR_DOMICILIO">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[DIR_DOMICILIO]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[E_MAILPERSONAL]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[E_MAILPERSONAL]"
+                      name="E_MAILPERSONAL">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[E_MAILPERSONAL]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[N_VACUNAS]"
+                      dataType="i4"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[N_VACUNAS]"
+                      name="N_VACUNAS">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[N_VACUNAS]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[VISUALIZAR]"
+                      dataType="bool"
+                      lineageId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación].Columns[VISUALIZAR]"
+                      name="VISUALIZAR">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Especifica el identificador de linaje de la columna de entrada que está asociada a esta columna de salida."
+                          name="SortColumnId">#{Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB].Columns[VISUALIZAR]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Marca inactivos\Roles"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="Origen de OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;7"
+              description="Origen de OLE DB"
+              name="Roles"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowset">[dbo].[roles_funcionarios]</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica la variable que contiene el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="Comando SQL para ejecutar."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT * FROM   roles_funcionarios  where MES  IS NOT NULL and FECHA_CUR  BETWEEN DATEADD(day, -366, CONVERT(date, GETDATE())) AND CONVERT(date, GETDATE())</property>
+                <property
+                  dataType="System.String"
+                  description="Variable que contiene el comando SQL para ejecutar."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Fuerza el uso del valor de la propiedad DefaultCodePage al describir datos de caracteres."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el modo utilizado para obtener acceso a la base de datos."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="Asignaciones entre los parámetros del comando SQL y las variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Marca inactivos\Roles.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[win-sqlserv-01.Roles_dgac]"
+                  connectionManagerRefId="Package.ConnectionManagers[win-sqlserv-01.Roles_dgac]"
+                  description="La conexión de tiempo de ejecución OLE DB usada para obtener acceso a la base de datos."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB]"
+                  name="Salida de origen de OLE DB">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[APELLIDOS_NOMBRES]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[APELLIDOS_NOMBRES]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[APELLIDOS_NOMBRES]"
+                      name="APELLIDOS_NOMBRES"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[EJERCICIO]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[EJERCICIO]"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[EJERCICIO]"
+                      name="EJERCICIO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MES]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[MES]"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MES]"
+                      name="MES"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[TIPO_NOMINA]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[TIPO_NOMINA]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[TIPO_NOMINA]"
+                      name="TIPO_NOMINA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[DESCRIPCION]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[DESCRIPCION]"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[DESCRIPCION]"
+                      name="DESCRIPCION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[NO_CUR]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[NO_CUR]"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[NO_CUR]"
+                      name="NO_CUR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[FECHA_CUR]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[FECHA_CUR]"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[FECHA_CUR]"
+                      name="FECHA_CUR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[ID_NOMINA]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[ID_NOMINA]"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[ID_NOMINA]"
+                      name="ID_NOMINA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[NUMERO_DOCUMENTO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[NUMERO_DOCUMENTO]"
+                      length="30"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[NUMERO_DOCUMENTO]"
+                      name="NUMERO_DOCUMENTO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[CODIGO_DEDUCCION]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[CODIGO_DEDUCCION]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[CODIGO_DEDUCCION]"
+                      name="CODIGO_DEDUCCION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[TIPO_RUBRO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[TIPO_RUBRO]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[TIPO_RUBRO]"
+                      name="TIPO_RUBRO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[CODIGO_RUBRO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[CODIGO_RUBRO]"
+                      length="80"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[CODIGO_RUBRO]"
+                      name="CODIGO_RUBRO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[NOMBRE_RUBRO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[NOMBRE_RUBRO]"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[NOMBRE_RUBRO]"
+                      name="NOMBRE_RUBRO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MONTO_CALCULADO]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[MONTO_CALCULADO]"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MONTO_CALCULADO]"
+                      name="MONTO_CALCULADO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MONTO_DESCONTADO]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[MONTO_DESCONTADO]"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MONTO_DESCONTADO]"
+                      name="MONTO_DESCONTADO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MONTO_PENDIENTE]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[MONTO_PENDIENTE]"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[MONTO_PENDIENTE]"
+                      name="MONTO_PENDIENTE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[id]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[id]"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].Columns[id]"
+                      name="id"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[APELLIDOS_NOMBRES]"
+                      dataType="wstr"
+                      length="255"
+                      name="APELLIDOS_NOMBRES" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[EJERCICIO]"
+                      dataType="i8"
+                      name="EJERCICIO" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[MES]"
+                      dataType="i8"
+                      name="MES" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[TIPO_NOMINA]"
+                      dataType="wstr"
+                      length="255"
+                      name="TIPO_NOMINA" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[DESCRIPCION]"
+                      dataType="nText"
+                      name="DESCRIPCION" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[NO_CUR]"
+                      dataType="r8"
+                      name="NO_CUR" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[FECHA_CUR]"
+                      dataType="dbTimeStamp"
+                      name="FECHA_CUR" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[ID_NOMINA]"
+                      dataType="r8"
+                      name="ID_NOMINA" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[NUMERO_DOCUMENTO]"
+                      dataType="wstr"
+                      length="30"
+                      name="NUMERO_DOCUMENTO" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[CODIGO_DEDUCCION]"
+                      dataType="wstr"
+                      length="255"
+                      name="CODIGO_DEDUCCION" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[TIPO_RUBRO]"
+                      dataType="wstr"
+                      length="255"
+                      name="TIPO_RUBRO" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[CODIGO_RUBRO]"
+                      dataType="wstr"
+                      length="80"
+                      name="CODIGO_RUBRO" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[NOMBRE_RUBRO]"
+                      dataType="wstr"
+                      length="255"
+                      name="NOMBRE_RUBRO" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[MONTO_CALCULADO]"
+                      dataType="r8"
+                      name="MONTO_CALCULADO" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[MONTO_DESCONTADO]"
+                      dataType="r8"
+                      name="MONTO_DESCONTADO" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[MONTO_PENDIENTE]"
+                      dataType="r8"
+                      name="MONTO_PENDIENTE" />
+                    <externalMetadataColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB].ExternalColumns[id]"
+                      dataType="i8"
+                      name="id" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB]"
+                  isErrorOut="true"
+                  name="Salida de error de origen de OLE DB">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[EJERCICIO]"
+                      dataType="i8"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[EJERCICIO]"
+                      name="EJERCICIO" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[MES]"
+                      dataType="i8"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[MES]"
+                      name="MES" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[TIPO_NOMINA]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[TIPO_NOMINA]"
+                      name="TIPO_NOMINA" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[DESCRIPCION]"
+                      dataType="nText"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[DESCRIPCION]"
+                      name="DESCRIPCION" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[NO_CUR]"
+                      dataType="r8"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[NO_CUR]"
+                      name="NO_CUR" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[FECHA_CUR]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[FECHA_CUR]"
+                      name="FECHA_CUR" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[ID_NOMINA]"
+                      dataType="r8"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[ID_NOMINA]"
+                      name="ID_NOMINA" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[NUMERO_DOCUMENTO]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[NUMERO_DOCUMENTO]"
+                      name="NUMERO_DOCUMENTO" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[APELLIDOS_NOMBRES]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[APELLIDOS_NOMBRES]"
+                      name="APELLIDOS_NOMBRES" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[CODIGO_DEDUCCION]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[CODIGO_DEDUCCION]"
+                      name="CODIGO_DEDUCCION" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[TIPO_RUBRO]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[TIPO_RUBRO]"
+                      name="TIPO_RUBRO" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[CODIGO_RUBRO]"
+                      dataType="wstr"
+                      length="80"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[CODIGO_RUBRO]"
+                      name="CODIGO_RUBRO" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[NOMBRE_RUBRO]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[NOMBRE_RUBRO]"
+                      name="NOMBRE_RUBRO" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[MONTO_CALCULADO]"
+                      dataType="r8"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[MONTO_CALCULADO]"
+                      name="MONTO_CALCULADO" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[MONTO_DESCONTADO]"
+                      dataType="r8"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[MONTO_DESCONTADO]"
+                      name="MONTO_DESCONTADO" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[MONTO_PENDIENTE]"
+                      dataType="r8"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[MONTO_PENDIENTE]"
+                      name="MONTO_PENDIENTE" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[id]"
+                      dataType="i8"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[id]"
+                      name="id" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Marca inactivos\Roles.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Marca inactivos.Paths[Datos_del_mes_actual]"
+              endId="Package\Marca inactivos\Ordenar.Inputs[Entrada de ordenación]"
+              name="Datos_del_mes_actual"
+              startId="Package\Marca inactivos\División condicional.Outputs[Datos_del_mes_actual]" />
+            <path
+              refId="Package\Marca inactivos.Paths[Salida de combinación de mezcla]"
+              endId="Package\Marca inactivos\Multidifusión.Inputs[Entrada de Multidifusión 1]"
+              name="Salida de combinación de mezcla"
+              startId="Package\Marca inactivos\Combinación de mezcla.Outputs[Salida de combinación de mezcla]" />
+            <path
+              refId="Package\Marca inactivos.Paths[Salida de multidifusión 1]"
+              endId="Package\Marca inactivos\Comando de OLE DB.Inputs[Entrada de comando de OLE DB]"
+              name="Salida de multidifusión 1"
+              startId="Package\Marca inactivos\Multidifusión.Outputs[Salida de multidifusión 1]" />
+            <path
+              refId="Package\Marca inactivos.Paths[Salida de ordenación]"
+              endId="Package\Marca inactivos\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla]"
+              name="Salida de ordenación"
+              startId="Package\Marca inactivos\Ordenar 1.Outputs[Salida de ordenación]" />
+            <path
+              refId="Package\Marca inactivos.Paths[Salida de ordenación1]"
+              endId="Package\Marca inactivos\Combinación de mezcla.Inputs[Entrada derecha de combinación de mezcla]"
+              name="Salida de ordenación"
+              startId="Package\Marca inactivos\Ordenar.Outputs[Salida de ordenación]" />
+            <path
+              refId="Package\Marca inactivos.Paths[Salida de origen de OLE DB]"
+              endId="Package\Marca inactivos\División condicional.Inputs[Entrada de división condicional]"
+              name="Salida de origen de OLE DB"
+              startId="Package\Marca inactivos\Roles.Outputs[Salida de origen de OLE DB]" />
+            <path
+              refId="Package\Marca inactivos.Paths[Salida de origen de OLE DB1]"
+              endId="Package\Marca inactivos\Ordenar 1.Inputs[Entrada de ordenación]"
+              name="Salida de origen de OLE DB"
+              startId="Package\Marca inactivos\Funcionarios.Outputs[Salida de origen de OLE DB]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{6EE5BF0A-3E55-49BD-9DA6-80CEC48D420F}"
+      DTS:From="Package\Execute SQL Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Marca inactivos" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Marca inactivos"
+          TopLeft="87,179" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Execute SQL Task"
+          TopLeft="76,89" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="160,131">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48"
+              Start="0,0"
+              End="0,40.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Marca inactivos">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="138,42"
+          Id="Package\Marca inactivos\Funcionarios"
+          TopLeft="70,98" />
+        <NodeLayout
+          Size="104,42"
+          Id="Package\Marca inactivos\Roles"
+          TopLeft="339,98" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Marca inactivos\División condicional"
+          TopLeft="299,193" />
+        <EdgeLayout
+          Id="Package\Marca inactivos.Paths[Salida de origen de OLE DB]"
+          TopLeft="387.75,140">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,53"
+              Start="0,0"
+              End="0,45.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="117,51"
+          Id="Package\Marca inactivos\Ordenar"
+          TopLeft="329,310" />
+        <EdgeLayout
+          Id="Package\Marca inactivos.Paths[Datos_del_mes_actual]"
+          TopLeft="386,235">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,75"
+              Start="0,0"
+              End="0,67.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,67.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-49.86712890625,28.21875,99.7342578125,11.0625"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="126,42"
+          Id="Package\Marca inactivos\Ordenar 1"
+          TopLeft="114,315" />
+        <EdgeLayout
+          Id="Package\Marca inactivos.Paths[Salida de origen de OLE DB1]"
+          TopLeft="139,140">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="38,175"
+              Start="0,0"
+              End="38,167.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,83.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,83.5"
+                    Point2="0,87.5"
+                    Point3="4,87.5" />
+                  <mssgle:LineSegment
+                    End="34,87.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="34,87.5"
+                    Point2="38,87.5"
+                    Point3="38,91.5" />
+                  <mssgle:LineSegment
+                    End="38,167.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="190,42"
+          Id="Package\Marca inactivos\Combinación de mezcla"
+          TopLeft="207,415" />
+        <EdgeLayout
+          Id="Package\Marca inactivos.Paths[Salida de ordenación]"
+          TopLeft="177,357">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="94.6666666666667,58"
+              Start="0,0"
+              End="94.6666666666667,50.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.5093945720251" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,30.5093945720251"
+                    Point2="0,34.5093945720251"
+                    Point3="4,34.5093945720251" />
+                  <mssgle:LineSegment
+                    End="90.6666666666667,34.5093945720251" />
+                  <mssgle:CubicBezierSegment
+                    Point1="90.6666666666667,34.5093945720251"
+                    Point2="94.6666666666667,34.5093945720251"
+                    Point3="94.6666666666667,38.5093945720251" />
+                  <mssgle:LineSegment
+                    End="94.6666666666667,50.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Marca inactivos.Paths[Salida de ordenación1]"
+          TopLeft="387.5,361">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-55.1666666666667,54"
+              Start="0,0"
+              End="-55.1666666666667,46.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.1294363256785" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.1294363256785"
+                    Point2="0,32.1294363256785"
+                    Point3="-4,32.1294363256785" />
+                  <mssgle:LineSegment
+                    End="-51.1666666666667,32.1294363256785" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-51.1666666666667,32.1294363256785"
+                    Point2="-55.1666666666667,32.1294363256785"
+                    Point3="-55.1666666666667,36.1294363256785" />
+                  <mssgle:LineSegment
+                    End="-55.1666666666667,46.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="138,42"
+          Id="Package\Marca inactivos\Multidifusión"
+          TopLeft="502,457" />
+        <EdgeLayout
+          Id="Package\Marca inactivos.Paths[Salida de combinación de mezcla]"
+          TopLeft="397,436">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="105,42"
+              Start="0,0"
+              End="97.5,42">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="48.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="48.5,0"
+                    Point2="52.5,0"
+                    Point3="52.5,4" />
+                  <mssgle:LineSegment
+                    End="52.5,38" />
+                  <mssgle:CubicBezierSegment
+                    Point1="52.5,38"
+                    Point2="52.5,42"
+                    Point3="56.5,42" />
+                  <mssgle:LineSegment
+                    End="97.5,42" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="44.5,-22,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="177,42"
+          Id="Package\Marca inactivos\Comando de OLE DB"
+          TopLeft="699,373" />
+        <EdgeLayout
+          Id="Package\Marca inactivos.Paths[Salida de multidifusión 1]"
+          TopLeft="571,457">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="216.5,-42"
+              Start="0,0"
+              End="216.5,-34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-17" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-17"
+                    Point2="0,-21"
+                    Point3="4,-21" />
+                  <mssgle:LineSegment
+                    End="212.5,-21" />
+                  <mssgle:CubicBezierSegment
+                    Point1="212.5,-21"
+                    Point2="216.5,-21"
+                    Point3="216.5,-25" />
+                  <mssgle:LineSegment
+                    End="216.5,-34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Marca inactivos\Funcionarios">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Marca inactivos\Roles">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,39 @@
+<AnalysisServicesUserConfiguration xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0">
+  <Configurations>
+    <Configuration>
+      <Name>Development</Name>
+      <Options>
+        <UserIDs>
+          <ConfigurationSetting>
+            <Id>WIN-SQLSERV-01</Id>
+            <Name>WIN-SQLSERV-01</Name>
+            <Value xsi:type="xsd:string">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAw34IN0ZE90ec05yqWTafnAAAAAAeAAAAVwBJAE4ALQBTAFEATABTAEUAUgBWAC0AMAAxAAAAA2YAAMAAAAAQAAAA+hA2GcJQP8ICRT32hC+yjQAAAAAEgAAAoAAAABAAAABgDMLM6GanXmhBF+ZUzQ9TGAAAAPAuUU5ds7HvVjf2eTUu46HjwdGfoAyROBQAAAAuhJHssHPEzokzs29wpo9xudoABg==</Value>
+          </ConfigurationSetting>
+          <ConfigurationSetting>
+            <Id>WIN-SQLSERV-01 1</Id>
+            <Name>WIN-SQLSERV-01 1</Name>
+            <Value xsi:type="xsd:string">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAw34IN0ZE90ec05yqWTafnAAAAAAiAAAAVwBJAE4ALQBTAFEATABTAEUAUgBWAC0AMAAxACAAMQAAAANmAADAAAAAEAAAAAME8/d+2hedF+CoZkgDeDAAAAAABIAAAKAAAAAQAAAA2cE+BiY/Sfyb3SUGlRboJRgAAABfgoUogTgoXGKZ6l8YzRpRhmuZHJClhQkUAAAAu3izacTlGoX1DmVNlNqpTWPc0Iw=</Value>
+          </ConfigurationSetting>
+        </UserIDs>
+        <UserPasswords>
+          <ConfigurationSetting>
+            <Id>WIN-SQLSERV-01</Id>
+            <Name>WIN-SQLSERV-01</Name>
+            <Value xsi:type="xsd:string">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAw34IN0ZE90ec05yqWTafnAAAAAAeAAAAVwBJAE4ALQBTAFEATABTAEUAUgBWAC0AMAAxAAAAA2YAAMAAAAAQAAAAXUhcU8tDcsYe7gKgRXep5gAAAAAEgAAAoAAAABAAAADGMT7ZfCJHyJ81Pu99C+MaGAAAAJm/bYzmO3Mwc6wwzqGr2/Io1fGcZC1UXhQAAAB1DPtSEYBtipZzvbEmdbMTMLp33A==</Value>
+          </ConfigurationSetting>
+          <ConfigurationSetting>
+            <Id>WIN-SQLSERV-01 1</Id>
+            <Name>WIN-SQLSERV-01 1</Name>
+            <Value xsi:type="xsd:string">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAw34IN0ZE90ec05yqWTafnAAAAAAiAAAAVwBJAE4ALQBTAFEATABTAEUAUgBWAC0AMAAxACAAMQAAAANmAADAAAAAEAAAADX7cLhHnpp2TCiddToQntEAAAAABIAAAKAAAAAQAAAA+6arbnsJYApyqoOfpdaVdRgAAAA9PKdCTY91YRZOjwk28++dvCSeX4S8YhwUAAAAEucMMDo0cMRynUFmn6TCjc/vVOE=</Value>
+          </ConfigurationSetting>
+        </UserPasswords>
+        <TargetServer>WIN-SQLSERV-01</TargetServer>
+        <TargetDatabase>BI_FINANCIERO_GASTOS</TargetDatabase>
+        <StartObject>
+          <ObjectId></ObjectId>
+          <ObjectType>Current</ObjectType>
+        </StartObject>
+      </Options>
+    </Configuration>
+  </Configurations>
+</AnalysisServicesUserConfiguration>
